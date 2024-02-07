@@ -3,6 +3,7 @@ let msgSection = document.querySelector(".winner")
 let reset = document.querySelector(".reset")
 let msg = document.querySelector(".win-para")
 playerO = true
+count = 0
 
 const winPattern = [
     [0,1,2],
@@ -15,14 +16,16 @@ const winPattern = [
     [2,4,6]
 ];
 
-reset.addEventListener("click",()=>{
+function resetFunc(){
     playerO = true
     msgSection.classList.add("hide")
     boxes.forEach((box)=>{
         box.disabled =false
         box.innerText = ""
     })
-})
+}
+
+reset.addEventListener("click",resetFunc)
 
 const winAlert = (winner) => {
     boxes.forEach((box)=>{
@@ -42,7 +45,15 @@ const checkWinner = () =>{
                 winAlert(pos1Val);
             }
         }
-        // console.log(boxes[patt[0]],boxes[patt[1]],boxes[patt[2]])
+    }
+}
+
+function chechReset(){
+    if(count==9){
+        playerO = true
+        msgSection.classList.remove("hide")
+        msg.innerHTML = "It is a draw"
+    
     }
 }
 
@@ -58,5 +69,7 @@ boxes.forEach((box)=>{
             box.disabled = true
         }
         checkWinner();
+        count++;
+        chechReset();
     })
 })
